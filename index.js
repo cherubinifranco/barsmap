@@ -1,4 +1,5 @@
 import createServer from './app.js';
+import 'dotenv/config'
 
 const port = 3000;
 const app = createServer();

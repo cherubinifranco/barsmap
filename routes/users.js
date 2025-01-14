@@ -14,33 +14,22 @@ usersRouter.get("/", (req, res) => {
   });
 });
 
-usersRouter.post("/", async (req, res) => {
+usersRouter.post("/new", async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     await addUser(username, hashedPassword);
+
+
     res.status(201).send();
   } catch {
     res.status(500).send();
   }
 });
 
-usersRouter.post("/login", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  try {
-    const user = await getUser(username, password);
-    if (await bcrypt.compare(password, user.password_hash)) {
-      res.send("Success");
-    } else {
-      res.send("Not Allowed");
-    }
-  } catch {
-    res.status(500).send("Server Error");
-  }
-});
+
 
 function addUser(username, password) {
   return new Promise((resolve, reject) => {
@@ -61,23 +50,6 @@ function addUser(username, password) {
   });
 }
 
-function getUser(username, password) {
-  return new Promise((resolve, reject) => {
-    db.all(
-      `
-            SELECT * FROM users WHERE username == (?) LIMIT 1
-        `,
-      username,
-      (err, user) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(user[0]);
-        }
-      }
-    );
-  });
-}
+
 
 export default usersRouter;
