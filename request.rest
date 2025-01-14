@@ -1,8 +1,10 @@
+### fetch all users
+
 GET http://localhost:3000/users
 
-###
+### Create a new user
 
-POST http://localhost:3000/users
+POST http://localhost:3000/users/new
 Content-Type: application/json
 
 {
@@ -13,7 +15,7 @@ Content-Type: application/json
 
 ### Good Login
 
-POST http://localhost:3000/users/login
+POST http://localhost:3000/login
 Content-Type: application/json
 
 {
@@ -23,7 +25,7 @@ Content-Type: application/json
 
 ### Bad Login
 
-POST http://localhost:3000/users/login
+POST http://localhost:3000/login
 Content-Type: application/json
 
 {
